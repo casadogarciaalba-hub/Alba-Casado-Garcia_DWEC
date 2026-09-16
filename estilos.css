@@ -10,3 +10,16 @@ body {
 h1 { 
  color: #4f8cff; 
 } 
+
+#boton {
+  background-color: #4f8cff;
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+#boton:hover {
+  background-color: #6fa3ff;
+}
