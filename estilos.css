@@ -23,3 +23,15 @@ h1 {
 #boton:hover {
   background-color: #6fa3ff;
 }
+#menu {
+  background-color: #161b22;
+  padding: 10px;
+}
+.enlace {
+  color: #58a6ff;
+  text-decoration: none;
+  margin-right: 15px;
+}
+.enlace:hover {
+  color: #ffffff;
+}
