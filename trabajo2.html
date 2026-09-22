@@ -6,7 +6,14 @@
 </head>
 <body>
 <p id="mensaje">Todavía no ha pasado nada.</p>
-<button id="boton" onclick="document.getElementById('mensaje').textContent = 
-'Has pulsado el botón';">Púlsame</button>
+<button id="boton">Púlsame</button>
+
+<script>
+  const boton = document.getElementById('boton');
+  const mensaje = document.getElementById('mensaje');
+  boton.addEventListener('click', function () {
+    mensaje.textContent = 'Has pulsado el botón';
+  });
+</script>
 </body>
 </html>
