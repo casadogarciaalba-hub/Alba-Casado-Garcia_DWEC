@@ -59,3 +59,32 @@ function pintarTabla() {
 
 // Al cargar la página se pinta la tabla.
 pintarTabla();
+
+
+
+
+
+
+/* =============================================================
+   RETO FINAL 03 · Leer los datos del formulario
+   ============================================================= */
+
+// Recuperamos el botón "Añadir juego" por su id.
+const btnAnadir = document.getElementById("btn-anadir");
+
+// Ponemos el botón a la escucha del clic.
+btnAnadir.addEventListener("click", function () {
+
+  // Recogemos lo que ha escrito el usuario (propiedad value de cada campo).
+  const nombre     = document.getElementById("input-nombre").value.trim();
+  const compania   = document.getElementById("input-compania").value.trim();
+  const plataforma = document.getElementById("input-plataforma").value;
+
+  // La valoración y el precio llegan como texto: los pasamos a número.
+  const valoracion = parseFloat(document.getElementById("input-valoracion").value);
+  const precio     = parseFloat(document.getElementById("input-precio").value);
+
+  // Prueba del apartado 03: comprobamos en consola lo que se ha leído.
+  console.log("Datos leídos:", nombre, compania, plataforma, valoracion, precio);
+});
+
