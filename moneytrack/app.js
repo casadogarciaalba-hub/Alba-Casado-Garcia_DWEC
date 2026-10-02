@@ -61,3 +61,63 @@ let movimientos = [
 // Prueba del nivel 2: muestra el array como tabla en la consola
 console.log("Número de movimientos:", movimientos.length);
 console.table(movimientos);
+
+
+
+
+/* =============================================================
+   NIVEL 3 · Cálculos con funciones y bucles
+   ============================================================= */
+
+/**
+ * totalIngresos()
+ * Recorre el array con un bucle y suma solo los importes positivos.
+ */
+function totalIngresos() {
+  let suma = 0;
+  for (let i = 0; i < movimientos.length; i++) {
+    if (movimientos[i].importe > 0) {
+      suma += movimientos[i].importe;
+    }
+  }
+  return suma;
+}
+
+/**
+ * totalGastos()
+ * Recorre el array con un bucle y suma solo los importes negativos.
+ * Devuelve un número negativo (o 0 si no hay gastos).
+ */
+function totalGastos() {
+  let suma = 0;
+  for (let i = 0; i < movimientos.length; i++) {
+    if (movimientos[i].importe < 0) {
+      suma += movimientos[i].importe;
+    }
+  }
+  return suma;
+}
+
+/**
+ * saldoActual()
+ * Devuelve el saldo inicial + ingresos + gastos.
+ * Los gastos ya son negativos, así que al sumarlos restan.
+ */
+function saldoActual() {
+  return saldoInicial + totalIngresos() + totalGastos();
+}
+
+/**
+ * mostrarResumenConsola()
+ * Muestra por consola el resumen de la cuenta usando formatearDinero.
+ */
+function mostrarResumenConsola() {
+  console.log("=== Resumen de la cuenta ===");
+  console.log("Saldo inicial: " + formatearDinero(saldoInicial));
+  console.log("Ingresos:      " + formatearDinero(totalIngresos()));
+  console.log("Gastos:        " + formatearDinero(totalGastos()));
+  console.log("Saldo actual:  " + formatearDinero(saldoActual()));
+}
+
+// Prueba del nivel 3
+mostrarResumenConsola();
