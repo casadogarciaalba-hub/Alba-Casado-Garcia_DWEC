@@ -29,3 +29,99 @@ body {
 .cabecera h1 span {
   color: #4fc3f7;
 }
+
+
+
+
+/* ---------- Contenido principal ---------- */
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 16px 32px;
+  display: grid;
+  gap: 20px;
+}
+
+/* ---------- Paneles ---------- */
+.panel {
+  background: #182028;
+  border: 1px solid #2a3540;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.panel h2 {
+  font-size: 1.2rem;
+  color: #4fc3f7;
+}
+
+.panel-titulo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+/* ---------- Desplegables y campos ---------- */
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+  color: #8b98a5;
+}
+
+input,
+select {
+  background: #0f1419;
+  color: #e6edf3;
+  border: 1px solid #2a3540;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 1rem;
+}
+
+/* ---------- Tabla ---------- */
+.tabla-contenedor {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #2a3540;
+}
+
+th {
+  color: #8b98a5;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+tbody tr:hover {
+  background: rgba(79, 195, 247, 0.06);
+}
+
+/* Importes: verde si es ingreso, rojo si es gasto */
+.importe {
+  font-weight: 700;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.importe.ingreso { color: #3ddc84; }
+.importe.gasto   { color: #ff6b6b; }
+
+.vacio {
+  text-align: center;
+  color: #8b98a5;
+  font-style: italic;
+}

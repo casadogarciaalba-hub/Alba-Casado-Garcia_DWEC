@@ -121,3 +121,107 @@ function mostrarResumenConsola() {
 
 // Prueba del nivel 3
 mostrarResumenConsola();
+
+
+
+
+/* =============================================================
+   NIVEL 4 · Métodos de array: filtrar y transformar (DOM)
+   ============================================================= */
+
+// Lista de categorías posibles (para rellenar el desplegable).
+const CATEGORIAS = ["Nómina", "Comida", "Transporte", "Ocio", "Hogar", "Extra"];
+
+// Referencias a los elementos del HTML que vamos a usar.
+const cuerpoTabla     = document.getElementById("cuerpo-tabla");
+const filtroCategoria = document.getElementById("filtro-categoria");
+
+/**
+ * formatearFecha(fechaISO)
+ * Convierte "2026-09-01" en "01/09/2026".
+ */
+function formatearFecha(fechaISO) {
+  const partes = fechaISO.split("-");
+  return partes[2] + "/" + partes[1] + "/" + partes[0];
+}
+
+/**
+ * crearCelda(texto, clase)
+ * Crea una celda <td> con el texto indicado y, si se pasa, una clase CSS.
+ * Usa textContent para que el texto no se interprete como HTML.
+ */
+function crearCelda(texto, clase) {
+  const celda = document.createElement("td");
+  celda.textContent = texto;
+  if (clase) celda.className = clase;
+  return celda;
+}
+
+/**
+ * pintarTabla(lista)
+ * Vacía el cuerpo de la tabla y pinta una fila por cada movimiento
+ * de la lista recibida. El importe sale en verde si es ingreso
+ * y en rojo si es gasto.
+ */
+function pintarTabla(lista) {
+  cuerpoTabla.innerHTML = "";
+
+  // Si no hay movimientos que mostrar, se avisa con una fila.
+  if (lista.length === 0) {
+    const fila = document.createElement("tr");
+    const celda = crearCelda("No hay movimientos en esta categoría.", "vacio");
+    celda.colSpan = 4;
+    fila.appendChild(celda);
+    cuerpoTabla.appendChild(fila);
+    return;
+  }
+
+  lista.forEach(function (mov) {
+    const fila = document.createElement("tr");
+
+    fila.appendChild(crearCelda(formatearFecha(mov.fecha)));
+    fila.appendChild(crearCelda(mov.concepto));
+    fila.appendChild(crearCelda(mov.categoria));
+
+    // Clase según sea ingreso (verde) o gasto (rojo).
+    const claseImporte = mov.importe > 0 ? "importe ingreso" : "importe gasto";
+    fila.appendChild(crearCelda(formatearDinero(mov.importe), claseImporte));
+
+    cuerpoTabla.appendChild(fila);
+  });
+}
+
+/**
+ * movimientosFiltrados()
+ * Devuelve los movimientos de la categoría elegida en el desplegable
+ * usando filter. Si se elige "todas", devuelve el array completo.
+ */
+function movimientosFiltrados() {
+  const categoria = filtroCategoria.value;
+  if (categoria === "todas") {
+    return movimientos;
+  }
+  return movimientos.filter(function (mov) {
+    return mov.categoria === categoria;
+  });
+}
+
+/**
+ * rellenarFiltro()
+ * Añade al desplegable la opción "Todas" y una opción por categoría.
+ */
+function rellenarFiltro() {
+  filtroCategoria.innerHTML = '<option value="todas">Todas</option>';
+  CATEGORIAS.forEach(function (cat) {
+    filtroCategoria.appendChild(new Option(cat, cat));
+  });
+}
+
+// Al cambiar el desplegable, se vuelve a pintar la tabla con la lista filtrada.
+filtroCategoria.addEventListener("change", function () {
+  pintarTabla(movimientosFiltrados());
+});
+
+// Inicio del nivel 4: se rellena el filtro y se pinta la tabla completa.
+rellenarFiltro();
+pintarTabla(movimientos);
