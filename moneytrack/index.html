@@ -42,6 +42,34 @@
       <ul id="lista-categorias" class="lista-categorias"></ul>
     </section>
 
+    <!-- FORMULARIO para añadir movimientos (nivel 6) -->
+    <section class="panel">
+      <h2>Añadir movimiento</h2>
+      <form id="formulario" class="formulario" novalidate>
+        <label>
+          Concepto
+          <input type="text" id="input-concepto" placeholder="Ej.: Compra semanal">
+        </label>
+        <label>
+          Tipo
+          <select id="input-tipo">
+            <option value="gasto">Gasto</option>
+            <option value="ingreso">Ingreso</option>
+          </select>
+        </label>
+        <label>
+          Importe
+          <input type="text" id="input-importe" inputmode="decimal" placeholder="Ej.: 25,50">
+        </label>
+        <label>
+          Categoría
+          <select id="input-categoria"></select>
+        </label>
+        <button type="submit" class="boton">Añadir</button>
+      </form>
+      <p id="mensaje" class="mensaje"></p>
+    </section>
+
     <!-- TABLA de movimientos con filtro (nivel 4) -->
     <section class="panel">
       <div class="panel-titulo">
@@ -60,6 +88,7 @@
               <th>Concepto</th>
               <th>Categoría</th>
               <th>Importe</th>
+              <th></th>
             </tr>
           </thead>
           <tbody id="cuerpo-tabla"></tbody>
@@ -68,6 +97,10 @@
     </section>
 
   </main>
+
+  <footer class="pie">
+    <p>MoneyTrack · Alba Casado García · DWEC 2º DAW · IES Juan García Valdemora</p>
+  </footer>
 
   <script src="app.js"></script>
 </body>

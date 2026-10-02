@@ -36,9 +36,6 @@ console.log("Prueba 85.5 ->", formatearDinero(85.5));
 console.log("Prueba -20 ->", formatearDinero(-20));
 
 
-
-
-
 /* =============================================================
    NIVEL 2 · El modelo de datos: array de objetos
    Ingresos = importes POSITIVOS · Gastos = importes NEGATIVOS
@@ -46,7 +43,7 @@ console.log("Prueba -20 ->", formatearDinero(-20));
 
 // Array de movimientos. Cada movimiento es un objeto con:
 // id (único), concepto, importe, categoria y fecha.
-// Es let (y no const) porque en el nivel 6 lo cambiaremos al borrar.
+// Es let (y no const) porque en el nivel 6 lo cambiamos al borrar.
 let movimientos = [
   { id: 1, concepto: "Nómina septiembre",       importe: 1450,  categoria: "Nómina",     fecha: "2026-09-01" },
   { id: 2, concepto: "Compra semanal",          importe: -86.4, categoria: "Comida",     fecha: "2026-09-03" },
@@ -61,8 +58,6 @@ let movimientos = [
 // Prueba del nivel 2: muestra el array como tabla en la consola
 console.log("Número de movimientos:", movimientos.length);
 console.table(movimientos);
-
-
 
 
 /* =============================================================
@@ -123,13 +118,11 @@ function mostrarResumenConsola() {
 mostrarResumenConsola();
 
 
-
-
 /* =============================================================
    NIVEL 4 · Métodos de array: filtrar y transformar (DOM)
    ============================================================= */
 
-// Lista de categorías posibles (para rellenar el desplegable).
+// Lista de categorías posibles (para rellenar los desplegables).
 const CATEGORIAS = ["Nómina", "Comida", "Transporte", "Ocio", "Hogar", "Extra"];
 
 // Referencias a los elementos del HTML que vamos a usar.
@@ -161,7 +154,7 @@ function crearCelda(texto, clase) {
  * pintarTabla(lista)
  * Vacía el cuerpo de la tabla y pinta una fila por cada movimiento
  * de la lista recibida. El importe sale en verde si es ingreso
- * y en rojo si es gasto.
+ * y en rojo si es gasto. Cada fila lleva un botón para borrar (nivel 6).
  */
 function pintarTabla(lista) {
   cuerpoTabla.innerHTML = "";
@@ -170,7 +163,7 @@ function pintarTabla(lista) {
   if (lista.length === 0) {
     const fila = document.createElement("tr");
     const celda = crearCelda("No hay movimientos en esta categoría.", "vacio");
-    celda.colSpan = 4;
+    celda.colSpan = 5;
     fila.appendChild(celda);
     cuerpoTabla.appendChild(fila);
     return;
@@ -186,6 +179,17 @@ function pintarTabla(lista) {
     // Clase según sea ingreso (verde) o gasto (rojo).
     const claseImporte = mov.importe > 0 ? "importe ingreso" : "importe gasto";
     fila.appendChild(crearCelda(formatearDinero(mov.importe), claseImporte));
+
+    // Botón de borrar (nivel 6): elimina este movimiento por su id.
+    const celdaBoton = document.createElement("td");
+    const boton = document.createElement("button");
+    boton.textContent = "Borrar";
+    boton.className = "boton-borrar";
+    boton.addEventListener("click", function () {
+      borrarMovimiento(mov.id);
+    });
+    celdaBoton.appendChild(boton);
+    fila.appendChild(celdaBoton);
 
     cuerpoTabla.appendChild(fila);
   });
@@ -225,8 +229,6 @@ filtroCategoria.addEventListener("change", function () {
 // Inicio del nivel 4: se rellena el filtro y se pinta la tabla completa.
 rellenarFiltro();
 pintarTabla(movimientos);
-
-
 
 
 /* =============================================================
@@ -334,3 +336,118 @@ console.log("Categoría con más gasto:", categoriaMayorGasto());
 
 // Se pintan las estadísticas en la página
 pintarEstadisticas();
+
+
+/* =============================================================
+   NIVEL 6 · Reto final: añadir y borrar movimientos
+   ============================================================= */
+
+// Referencias a los elementos del formulario.
+const formulario     = document.getElementById("formulario");
+const inputConcepto  = document.getElementById("input-concepto");
+const inputTipo      = document.getElementById("input-tipo");
+const inputImporte   = document.getElementById("input-importe");
+const inputCategoria = document.getElementById("input-categoria");
+const mensaje        = document.getElementById("mensaje");
+
+/**
+ * refrescar()
+ * Vuelve a pintar la tabla (respetando el filtro elegido) y las
+ * estadísticas. Se llama después de cada cambio para que nada
+ * quede desactualizado.
+ */
+function refrescar() {
+  pintarTabla(movimientosFiltrados());
+  pintarEstadisticas();
+}
+
+/**
+ * rellenarCategoriasFormulario()
+ * Rellena el desplegable de categorías del formulario.
+ */
+function rellenarCategoriasFormulario() {
+  inputCategoria.innerHTML = '<option value="">-- Elige --</option>';
+  CATEGORIAS.forEach(function (cat) {
+    inputCategoria.appendChild(new Option(cat, cat));
+  });
+}
+
+/**
+ * siguienteId()
+ * Devuelve un identificador único: el id más alto que haya + 1.
+ */
+function siguienteId() {
+  if (movimientos.length === 0) return 1;
+  const ids = movimientos.map(function (mov) {
+    return mov.id;
+  });
+  return Math.max(...ids) + 1;
+}
+
+/**
+ * mostrarMensaje(texto, tipo)
+ * Enseña un aviso debajo del formulario. tipo puede ser "error" u "ok".
+ */
+function mostrarMensaje(texto, tipo) {
+  mensaje.textContent = texto;
+  mensaje.className = "mensaje " + tipo;
+}
+
+/**
+ * Al enviar el formulario: se valida, se crea el objeto,
+ * se mete en el array y se refresca todo.
+ */
+formulario.addEventListener("submit", function (evento) {
+  evento.preventDefault(); // evita que la página se recargue
+
+  const concepto     = inputConcepto.value.trim();
+  const textoImporte = inputImporte.value.trim().replace(",", "."); // admite coma decimal
+  const categoria    = inputCategoria.value;
+
+  // Validación 1: ningún campo vacío
+  if (concepto === "" || textoImporte === "" || categoria === "") {
+    mostrarMensaje("Rellena el concepto, el importe y la categoría.", "error");
+    return;
+  }
+
+  // Validación 2: el importe tiene que ser un número distinto de 0
+  const numero = Number(textoImporte);
+  if (isNaN(numero) || numero === 0) {
+    mostrarMensaje("El importe debe ser un número distinto de 0.", "error");
+    return;
+  }
+
+  // Ingreso -> positivo · Gasto -> negativo (decisión de diseño del nivel 2)
+  const importe = inputTipo.value === "gasto" ? -Math.abs(numero) : Math.abs(numero);
+
+  // Se crea el nuevo objeto movimiento
+  const nuevoMovimiento = {
+    id: siguienteId(),
+    concepto: concepto,
+    importe: importe,
+    categoria: categoria,
+    fecha: new Date().toISOString().slice(0, 10) // fecha de hoy "AAAA-MM-DD"
+  };
+
+  // Se mete en el array y se refresca todo
+  movimientos.push(nuevoMovimiento);
+  formulario.reset();
+  mostrarMensaje("Movimiento añadido correctamente.", "ok");
+  refrescar();
+});
+
+/**
+ * borrarMovimiento(id)
+ * Elimina el movimiento con ese id usando filter y refresca todo.
+ */
+function borrarMovimiento(id) {
+  movimientos = movimientos.filter(function (mov) {
+    return mov.id !== id;
+  });
+  mostrarMensaje("Movimiento borrado.", "ok");
+  refrescar();
+}
+
+// Inicio del nivel 6
+rellenarCategoriasFormulario();
+refrescar();

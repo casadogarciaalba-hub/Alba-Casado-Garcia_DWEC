@@ -204,3 +204,70 @@ tbody tr:hover {
 .lista-categorias li.destacada .barra-relleno {
   opacity: 1;
 }
+
+
+
+
+
+
+
+/* ---------- Formulario (nivel 6) ---------- */
+.formulario {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  align-items: end;
+}
+
+input:focus,
+select:focus {
+  outline: 2px solid #4fc3f7;
+  border-color: transparent;
+}
+
+.boton {
+  background: #4fc3f7;
+  color: #00131c;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.boton:hover {
+  filter: brightness(1.1);
+}
+
+.mensaje {
+  margin-top: 10px;
+  min-height: 1.5em;
+  font-size: 0.9rem;
+}
+
+.mensaje.error { color: #ff6b6b; }
+.mensaje.ok    { color: #3ddc84; }
+
+/* ---------- Botón de borrar en cada fila ---------- */
+.boton-borrar {
+  background: transparent;
+  color: #ff6b6b;
+  border: 1px solid #ff6b6b;
+  border-radius: 6px;
+  padding: 4px 10px;
+  cursor: pointer;
+}
+
+.boton-borrar:hover {
+  background: #ff6b6b;
+  color: #fff;
+}
+
+/* ---------- Pie de página ---------- */
+.pie {
+  text-align: center;
+  color: #8b98a5;
+  font-size: 0.8rem;
+  padding: 16px;
+}
