@@ -63,13 +63,30 @@ pintarTabla();
 
 
 
+
 /* =============================================================
    RETO FINAL 03 · Leer los datos del formulario
    RETO FINAL 04 · Añadir el juego a la tabla
+   RETO FINAL 05 · Validación y limpiar el formulario
    ============================================================= */
 
-// Recuperamos el botón "Añadir juego" por su id.
-const btnAnadir = document.getElementById("btn-anadir");
+// Recuperamos el formulario y el botón "Añadir juego" por su id.
+const formulario = document.getElementById("formulario");
+const btnAnadir  = document.getElementById("btn-anadir");
+
+// 05 · Párrafo para avisar al usuario (se crea justo debajo del formulario).
+const mensaje = document.createElement("p");
+mensaje.className = "mensaje";
+formulario.after(mensaje);
+
+/**
+ * mostrarMensaje(texto, tipo)
+ * Enseña un aviso debajo del formulario. tipo puede ser "error" u "ok".
+ */
+function mostrarMensaje(texto, tipo) {
+  mensaje.textContent = texto;
+  mensaje.className = "mensaje " + tipo;
+}
 
 // Ponemos el botón a la escucha del clic.
 btnAnadir.addEventListener("click", function () {
@@ -83,7 +100,21 @@ btnAnadir.addEventListener("click", function () {
   const valoracion = parseFloat(document.getElementById("input-valoracion").value);
   const precio     = parseFloat(document.getElementById("input-precio").value);
 
-  console.log("Datos leídos:", nombre, compania, plataforma, valoracion, precio);
+  // 05 · Validación: si algún campo está vacío, avisamos y NO añadimos.
+  if (nombre === "" || compania === "" || plataforma === "" || isNaN(valoracion) || isNaN(precio)) {
+    mostrarMensaje("⚠️ Rellena todos los campos antes de añadir el juego.", "error");
+    return;
+  }
+
+  // 05 · Validación extra: valores con sentido.
+  if (valoracion < 0 || valoracion > 10) {
+    mostrarMensaje("⚠️ La valoración tiene que estar entre 0 y 10.", "error");
+    return;
+  }
+  if (precio < 0) {
+    mostrarMensaje("⚠️ El precio no puede ser negativo.", "error");
+    return;
+  }
 
   // 04 · Creamos un objeto nuevo con la misma forma que los del array.
   const nuevoJuego = {
@@ -94,10 +125,16 @@ btnAnadir.addEventListener("click", function () {
     precio: precio
   };
 
-  // Lo añadimos al array de videojuegos.
+  // Lo añadimos al array de videojuegos y repintamos la tabla.
   videojuegos.push(nuevoJuego);
-
-  // Volvemos a pintar la tabla: la fila nueva aparece sola.
   pintarTabla();
+
+  // 05 · Limpiamos el formulario para poder meter otro juego cómodamente.
+  formulario.reset();
+  document.getElementById("input-nombre").focus();
+  mostrarMensaje("✅ " + nombre + " se ha añadido a la colección.", "ok");
 });
+
+
+
 
