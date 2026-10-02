@@ -63,10 +63,9 @@ pintarTabla();
 
 
 
-
-
 /* =============================================================
    RETO FINAL 03 · Leer los datos del formulario
+   RETO FINAL 04 · Añadir el juego a la tabla
    ============================================================= */
 
 // Recuperamos el botón "Añadir juego" por su id.
@@ -75,7 +74,7 @@ const btnAnadir = document.getElementById("btn-anadir");
 // Ponemos el botón a la escucha del clic.
 btnAnadir.addEventListener("click", function () {
 
-  // Recogemos lo que ha escrito el usuario (propiedad value de cada campo).
+  // 03 · Recogemos lo que ha escrito el usuario (propiedad value).
   const nombre     = document.getElementById("input-nombre").value.trim();
   const compania   = document.getElementById("input-compania").value.trim();
   const plataforma = document.getElementById("input-plataforma").value;
@@ -84,7 +83,21 @@ btnAnadir.addEventListener("click", function () {
   const valoracion = parseFloat(document.getElementById("input-valoracion").value);
   const precio     = parseFloat(document.getElementById("input-precio").value);
 
-  // Prueba del apartado 03: comprobamos en consola lo que se ha leído.
   console.log("Datos leídos:", nombre, compania, plataforma, valoracion, precio);
+
+  // 04 · Creamos un objeto nuevo con la misma forma que los del array.
+  const nuevoJuego = {
+    nombre: nombre,
+    compania: compania,
+    plataforma: plataforma,
+    valoracion: valoracion,
+    precio: precio
+  };
+
+  // Lo añadimos al array de videojuegos.
+  videojuegos.push(nuevoJuego);
+
+  // Volvemos a pintar la tabla: la fila nueva aparece sola.
+  pintarTabla();
 });
 
