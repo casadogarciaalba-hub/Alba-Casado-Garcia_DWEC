@@ -34,3 +34,30 @@ console.log("Titular:", titular);
 console.log("Saldo inicial:", formatearDinero(saldoInicial));
 console.log("Prueba 85.5 ->", formatearDinero(85.5));
 console.log("Prueba -20 ->", formatearDinero(-20));
+
+
+
+
+
+/* =============================================================
+   NIVEL 2 · El modelo de datos: array de objetos
+   Ingresos = importes POSITIVOS · Gastos = importes NEGATIVOS
+   ============================================================= */
+
+// Array de movimientos. Cada movimiento es un objeto con:
+// id (único), concepto, importe, categoria y fecha.
+// Es let (y no const) porque en el nivel 6 lo cambiaremos al borrar.
+let movimientos = [
+  { id: 1, concepto: "Nómina septiembre",       importe: 1450,  categoria: "Nómina",     fecha: "2026-09-01" },
+  { id: 2, concepto: "Compra semanal",          importe: -86.4, categoria: "Comida",     fecha: "2026-09-03" },
+  { id: 3, concepto: "Abono transporte",        importe: -20,   categoria: "Transporte", fecha: "2026-09-05" },
+  { id: 4, concepto: "Cine y palomitas",        importe: -18.5, categoria: "Ocio",       fecha: "2026-09-12" },
+  { id: 5, concepto: "Venta libros de segunda", importe: 45,    categoria: "Extra",      fecha: "2026-09-15" },
+  { id: 6, concepto: "Cena con amigas",         importe: -32.9, categoria: "Ocio",       fecha: "2026-09-20" },
+  { id: 7, concepto: "Factura internet",        importe: -35,   categoria: "Hogar",      fecha: "2026-09-25" },
+  { id: 8, concepto: "Compra supermercado",     importe: -54.2, categoria: "Comida",     fecha: "2026-09-28" }
+];
+
+// Prueba del nivel 2: muestra el array como tabla en la consola
+console.log("Número de movimientos:", movimientos.length);
+console.table(movimientos);
