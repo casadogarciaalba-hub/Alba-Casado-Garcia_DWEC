@@ -1,0 +1,75 @@
+/* =============================================================
+   Mis videojuegos · estilos
+   ============================================================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: #13111c;
+  color: #ece8f6;
+  line-height: 1.5;
+}
+
+/* ---------- Cabecera ---------- */
+.cabecera {
+  text-align: center;
+  padding: 32px 16px 24px;
+}
+
+.cabecera h1 {
+  font-size: 2.2rem;
+  color: #b18cff;
+}
+
+.cabecera p {
+  color: #9a93b3;
+}
+
+/* ---------- Contenido ---------- */
+main {
+  max-width: 950px;
+  margin: 0 auto;
+  padding: 0 16px 32px;
+  display: grid;
+  gap: 20px;
+}
+
+.panel {
+  background: #1d1a2b;
+  border: 1px solid #2f2a45;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.panel h2 {
+  font-size: 1.2rem;
+  color: #b18cff;
+  margin-bottom: 12px;
+}
+
+/* ---------- Tabla ---------- */
+.tabla-contenedor {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #2f2a45;
+}
+
+th {
+  color: #9a93b3;
+  font-size: 0.8rem;
+  

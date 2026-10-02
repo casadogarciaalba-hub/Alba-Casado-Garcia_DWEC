@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis videojuegos</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+  <header class="cabecera">
+    <h1>🎮 Mis videojuegos</h1>
+    <p>Reto final · Alba Casado García</p>
+  </header>
+
+  <main>
+
+    <!-- TABLA de videojuegos (se rellena desde JavaScript) -->
+    <section class="panel">
+      <h2>Colección</h2>
+      <div class="tabla-contenedor">
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Compañía</th>
+              <th>Plataforma</th>
+              <th>Valoración</th>
+              <th>Precio</th>
+            </tr>
+          </thead>
+          <tbody id="cuerpo-tabla"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- RETO FINAL · Formulario para añadir juegos -->
+    <section class="panel">
+      <h2>Añadir un juego</h2>
+      <form id="formulario" class="formulario">
+        <label>
+          Nombre
+          <input type="text" id="input-nombre" placeholder="Ej.: Animal Crossing">
+        </label>
+        <label>
+          Compañía
+          <input type="text" id="input-compania" placeholder="Ej.: Nintendo">
+        </label>
+        <label>
+          Plataforma
+          <select id="input-plataforma">
+            <option value="">-- Elige --</option>
+            <option value="Nintendo Switch">Nintendo Switch</option>
+            <option value="PlayStation 5">PlayStation 5</option>
+            <option value="Xbox Series X">Xbox Series X</option>
+            <option value="PC">PC</option>
+            <option value="Móvil">Móvil</option>
+          </select>
+        </label>
+        <label>
+          Valoración (0-10)
+          <input type="number" id="input-valoracion" min="0" max="10" step="0.1" placeholder="Ej.: 8.5">
+        </label>
+        <label>
+          Precio (€)
+          <input type="number" id="input-precio" min="0" step="0.01" placeholder="Ej.: 39.99">
+        </label>
+        <button type="button" id="btn-anadir">Añadir juego</button>
+      </form>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
