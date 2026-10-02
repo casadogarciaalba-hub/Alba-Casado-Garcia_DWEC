@@ -15,7 +15,6 @@ body {
   line-height: 1.5;
 }
 
-/* ---------- Cabecera ---------- */
 .cabecera {
   text-align: center;
   padding: 32px 16px 24px;
@@ -30,7 +29,6 @@ body {
   color: #9a93b3;
 }
 
-/* ---------- Contenido ---------- */
 main {
   max-width: 950px;
   margin: 0 auto;
@@ -53,10 +51,6 @@ main {
 }
 
 /* ---------- Tabla ---------- */
-.tabla-contenedor {
-  overflow-x: auto;
-}
-
 table {
   width: 100%;
   border-collapse: collapse;
@@ -72,4 +66,76 @@ td {
 th {
   color: #9a93b3;
   font-size: 0.8rem;
-  
+  text-transform: uppercase;
+}
+
+tbody tr:hover {
+  background: rgba(177, 140, 255, 0.08);
+}
+
+.valoracion {
+  color: #ffc857;
+  font-weight: 700;
+}
+
+.precio {
+  font-weight: 700;
+  text-align: right;
+}
+
+
+
+
+
+/* ---------- Formulario (Reto final 02) ---------- */
+.formulario {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 14px;
+  align-items: end;
+}
+
+.formulario label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+  color: #9a93b3;
+}
+
+.formulario input,
+.formulario select {
+  background: #13111c;
+  color: #ece8f6;
+  border: 1px solid #2f2a45;
+  border-radius: 8px;
+  padding: 9px 10px;
+  font-size: 1rem;
+}
+
+.formulario input:focus,
+.formulario select:focus {
+  outline: 2px solid #b18cff;
+  border-color: transparent;
+}
+
+/* ---------- Botón Añadir juego ---------- */
+#btn-anadir {
+  background: #b18cff;
+  color: #13111c;
+  border: none;
+  border-radius: 8px;
+  padding: 11px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s, background 0.15s;
+}
+
+/* Efecto al pasar el ratón */
+#btn-anadir:hover {
+  background: #c8adff;
+  transform: translateY(-2px);
+}
+
+
