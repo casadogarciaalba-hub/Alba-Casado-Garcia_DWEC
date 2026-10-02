@@ -125,3 +125,82 @@ tbody tr:hover {
   color: #8b98a5;
   font-style: italic;
 }
+
+
+
+
+/* ---------- Tarjetas de resumen ---------- */
+.resumen {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.tarjeta {
+  background: #182028;
+  border: 1px solid #2a3540;
+  border-top: 4px solid #8b98a5;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.tarjeta h2 {
+  font-size: 0.85rem;
+  color: #8b98a5;
+  text-transform: uppercase;
+}
+
+.tarjeta p {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.tarjeta.ingreso { border-top-color: #3ddc84; }
+.tarjeta.gasto   { border-top-color: #ff6b6b; }
+.tarjeta.saldo   { border-top-color: #4fc3f7; }
+
+/* ---------- Estadísticas por categoría ---------- */
+.panel > h2 {
+  margin-bottom: 12px;
+}
+
+.lista-categorias {
+  list-style: none;
+  margin-top: 16px;
+  display: grid;
+  gap: 8px;
+}
+
+.lista-categorias li {
+  display: grid;
+  grid-template-columns: 100px 1fr 90px;
+  align-items: center;
+  gap: 12px;
+}
+
+.lista-categorias li span:last-child {
+  text-align: right;
+}
+
+.barra {
+  background: #0f1419;
+  border-radius: 6px;
+  height: 10px;
+  overflow: hidden;
+}
+
+.barra-relleno {
+  height: 100%;
+  background: #ff6b6b;
+  opacity: 0.6;
+  border-radius: 6px;
+}
+
+/* La categoría con más gasto se destaca */
+.lista-categorias li.destacada {
+  font-weight: 700;
+}
+
+.lista-categorias li.destacada .barra-relleno {
+  opacity: 1;
+}

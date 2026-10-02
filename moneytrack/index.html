@@ -12,8 +12,35 @@
     <h1>Money<span>Track</span></h1>
   </header>
 
+  <main>
 
-    <main>
+    <!-- RESUMEN de la cuenta: saldo, ingresos y gastos -->
+    <section class="resumen">
+      <article class="tarjeta">
+        <h2>Saldo inicial</h2>
+        <p id="dato-saldo-inicial">0,00 €</p>
+      </article>
+      <article class="tarjeta ingreso">
+        <h2>Ingresos</h2>
+        <p id="dato-ingresos">0,00 €</p>
+      </article>
+      <article class="tarjeta gasto">
+        <h2>Gastos</h2>
+        <p id="dato-gastos">0,00 €</p>
+      </article>
+      <article class="tarjeta saldo">
+        <h2>Saldo actual</h2>
+        <p id="dato-saldo">0,00 €</p>
+      </article>
+    </section>
+
+    <!-- ESTADÍSTICAS con reduce (nivel 5) -->
+    <section class="panel">
+      <h2>Estadísticas</h2>
+      <p>Total gastado: <strong id="dato-total-gastado">0,00 €</strong></p>
+      <p>Categoría con más gasto: <strong id="dato-mayor-gasto">—</strong></p>
+      <ul id="lista-categorias" class="lista-categorias"></ul>
+    </section>
 
     <!-- TABLA de movimientos con filtro (nivel 4) -->
     <section class="panel">
@@ -41,7 +68,7 @@
     </section>
 
   </main>
-  
+
   <script src="app.js"></script>
 </body>
 </html>

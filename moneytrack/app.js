@@ -225,3 +225,112 @@ filtroCategoria.addEventListener("change", function () {
 // Inicio del nivel 4: se rellena el filtro y se pinta la tabla completa.
 rellenarFiltro();
 pintarTabla(movimientos);
+
+
+
+
+/* =============================================================
+   NIVEL 5 · Estadísticas con reduce
+   ============================================================= */
+
+/**
+ * totalGastadoReduce()
+ * Calcula con reduce el total gastado (en positivo).
+ * Si el importe es negativo se suma su valor absoluto; si no, se ignora.
+ */
+function totalGastadoReduce() {
+  return movimientos.reduce(function (acumulado, mov) {
+    return mov.importe < 0 ? acumulado + Math.abs(mov.importe) : acumulado;
+  }, 0);
+}
+
+/**
+ * gastosPorCategoria()
+ * Devuelve un objeto con el gasto total de cada categoría.
+ * Ej.: { Comida: 140.6, Ocio: 51.4, ... }
+ * El acumulador es un objeto: si la categoría aún no existe, se crea a 0.
+ */
+function gastosPorCategoria() {
+  return movimientos.reduce(function (acumulador, mov) {
+    if (mov.importe < 0) {
+      if (acumulador[mov.categoria] === undefined) {
+        acumulador[mov.categoria] = 0;
+      }
+      acumulador[mov.categoria] += Math.abs(mov.importe);
+    }
+    return acumulador;
+  }, {});
+}
+
+/**
+ * categoriaMayorGasto()
+ * A partir de gastosPorCategoria, devuelve el nombre de la categoría
+ * en la que más se ha gastado, o null si no hay gastos.
+ */
+function categoriaMayorGasto() {
+  const gastos = gastosPorCategoria();
+  const categorias = Object.keys(gastos);
+
+  if (categorias.length === 0) return null;
+
+  return categorias.reduce(function (mayor, cat) {
+    return gastos[cat] > gastos[mayor] ? cat : mayor;
+  });
+}
+
+/**
+ * pintarEstadisticas()
+ * Muestra en la página el resumen de la cuenta (nivel 3) y las
+ * estadísticas (nivel 5): total gastado, categoría con más gasto
+ * y una barra por categoría.
+ */
+function pintarEstadisticas() {
+  // Resumen de la cuenta
+  document.getElementById("dato-saldo-inicial").textContent = formatearDinero(saldoInicial);
+  document.getElementById("dato-ingresos").textContent      = formatearDinero(totalIngresos());
+  document.getElementById("dato-gastos").textContent        = formatearDinero(totalGastos());
+  document.getElementById("dato-saldo").textContent         = formatearDinero(saldoActual());
+
+  // Total gastado con reduce
+  document.getElementById("dato-total-gastado").textContent = formatearDinero(totalGastadoReduce());
+
+  // Categoría con más gasto
+  const gastos = gastosPorCategoria();
+  const mayor = categoriaMayorGasto();
+  document.getElementById("dato-mayor-gasto").textContent =
+    mayor === null ? "Sin gastos" : mayor + " (" + formatearDinero(gastos[mayor]) + ")";
+
+  // Lista con una barra por categoría (proporcional a la de más gasto)
+  const lista = document.getElementById("lista-categorias");
+  lista.innerHTML = "";
+
+  Object.keys(gastos).forEach(function (cat) {
+    const porcentaje = (gastos[cat] / gastos[mayor]) * 100;
+
+    const item = document.createElement("li");
+    if (cat === mayor) item.className = "destacada";
+
+    const nombre = document.createElement("span");
+    nombre.textContent = cat;
+
+    const barra = document.createElement("div");
+    barra.className = "barra";
+    const relleno = document.createElement("div");
+    relleno.className = "barra-relleno";
+    relleno.style.width = porcentaje + "%";
+    barra.appendChild(relleno);
+
+    const cantidad = document.createElement("span");
+    cantidad.textContent = formatearDinero(gastos[cat]);
+
+    item.append(nombre, barra, cantidad);
+    lista.appendChild(item);
+  });
+}
+
+// Prueba del nivel 5: objeto de gastos por categoría en consola
+console.log("Gastos por categoría:", gastosPorCategoria());
+console.log("Categoría con más gasto:", categoriaMayorGasto());
+
+// Se pintan las estadísticas en la página
+pintarEstadisticas();
